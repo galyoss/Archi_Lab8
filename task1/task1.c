@@ -134,10 +134,6 @@ void print_symbols(state *s)
     printf("not implemented yet\n");
 }
 
-void relocation_tables(state *s)
-{
-    printf("not implemented yet\n");
-}
 
 void quit(state *s)
 {
@@ -160,7 +156,7 @@ void menu()
     state *s = malloc(sizeof(state *));
     s->debug_mode = '0';
     s->unit_size = 1;
-    struct fun_desc func_menu[] = {{"Toggle Debug Mode", toggle_debug_mode}, {"Examine ELF File", examine_elf_file}, {"Print Section Names", print_section_names}, {"Print Symbols", print_symbols}, {"Relocation Tables", relocation_tables}, {"Quit", quit}, {NULL, NULL}};
+    struct fun_desc func_menu[] = {{"Toggle Debug Mode", toggle_debug_mode}, {"Examine ELF File", examine_elf_file}, {"Print Section Names", print_section_names}, {"Print Symbols", print_symbols}, {"Quit", quit}, {NULL, NULL}};
     int lower_bound = 0, option_id;
     int upper_bound = sizeof(func_menu) / sizeof(func_menu[0]) - 2;
     char c;

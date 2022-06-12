@@ -9,7 +9,7 @@
 #include <fcntl.h>
 
 #define NAME_LEN 128
-#define buf_SZ 10000
+#define buf_SZ 30000
 
 int Currentfd = -1;
 void *map_start; // will point to the start of the memory mapped file
@@ -191,11 +191,6 @@ void print_symbols(state *s)
     }
 }
 
-void relocation_tables(state *s)
-{
-    printf("not implemented yet\n");
-}
-
 void quit(state *s)
 {
     if (s->debug_mode == '1')
@@ -217,7 +212,7 @@ void menu()
     state *s = malloc(sizeof(state *));
     s->debug_mode = '0';
     s->unit_size = 1;
-    struct fun_desc func_menu[] = {{"Toggle Debug Mode", toggle_debug_mode}, {"Examine ELF File", examine_elf_file}, {"Print Section Names", print_section_names}, {"Print Symbols", print_symbols}, {"Relocation Tables", relocation_tables}, {"Quit", quit}, {NULL, NULL}};
+    struct fun_desc func_menu[] = {{"Toggle Debug Mode", toggle_debug_mode}, {"Examine ELF File", examine_elf_file}, {"Print Section Names", print_section_names}, {"Print Symbols", print_symbols}, {"Quit", quit}, {NULL, NULL}};
     int lower_bound = 0, option_id;
     int upper_bound = sizeof(func_menu) / sizeof(func_menu[0]) - 2;
     char c;
@@ -245,9 +240,14 @@ void menu()
         if (option_id < lower_bound || option_id > upper_bound)
         {
             free(s);
-            printf("Not within bounds\n");
+            printf("\n====Not within bounds===\n");
             exit(0);
         }
+	if ((option_id == 3 | option_id == 2) && Currentfd == -1)
+	{
+		printf("\n ===Please choose 1-Examine ELF before!===\n");
+		continue;
+	}
         func_menu[option_id].fun(s);
         printf("\n");
     }
