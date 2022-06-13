@@ -125,6 +125,7 @@ void print_section_names(state *s)
     for (int i = 0; i < s->hdr->e_shnum; i++)
     {
         Elf32_Shdr *curr = &first_section[i];
+        printf("\npointer to the current section start: %p \n", curr)
         printf("[%2d] %-22s%-10x%-10x%-10x%-10x\n", i, shstrtab_start + first_section[i].sh_name, curr->sh_addr, curr->sh_offset, curr->sh_size, curr->sh_type);
     }
 }
